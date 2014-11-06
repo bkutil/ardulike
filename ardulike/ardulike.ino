@@ -3,12 +3,15 @@
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 void setup() {
+  Serial.begin(115200);
   lcd.begin(16, 2);
 }
 
 void loop() {
+  int reading = analogRead(A0);
   lcd.clear();
   lcd.setCursor(0, 1);
-  lcd.print(analogRead(A0));
+  lcd.print(reading);
+  Serial.println(reading);
   delay(20);
 }
