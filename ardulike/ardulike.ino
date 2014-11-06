@@ -11,7 +11,13 @@ void loop() {
   int reading = analogRead(A0);
   lcd.clear();
   lcd.setCursor(0, 1);
-  lcd.print(reading);
-  Serial.println(reading);
+
+  if (reading == 407) {
+    lcd.print("LEFT");
+    Serial.println("LEFT");
+  } else {
+    Serial.println("NONE");
+  }
+
   delay(20);
 }
