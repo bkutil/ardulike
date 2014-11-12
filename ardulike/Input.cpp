@@ -36,6 +36,11 @@ Button Input::get(void)
     last_change_at = now;
     last_pressed   = current_pressed;
     return current_pressed;
+  } else
+  if ( (now - last_change_at) > ButtonTimeHeld && current_pressed == last_pressed) {
+    last_change_at = now;
+    last_pressed   = current_pressed;
+    return current_pressed;
   } else {
     return ButtonNone;
   }

@@ -12,6 +12,7 @@ enum Button
 
   ButtonTreshold    = 10,
   ButtonTimePressed = 50,
+  ButtonTimeHeld    = 300,
 };
 
 class Input {
