@@ -19,9 +19,18 @@ void draw_position() {
   lcd.print(position / 16);
 }
 
+void draw_terrain() {
+  randomSeed((position / 16 + 1) << 8 + level);
+
+  for (uint8_t i = 0; i < 16; i++) {
+    if ((random() % 4) == 0) { lcd.setCursor(i, 1); lcd.print("T"); }
+  }
+};
+
 void setup() {
   lcd.begin(16, 2);
   draw_position();
+  draw_terrain();
   draw_player();
 }
 
@@ -41,6 +50,7 @@ void loop() {
   if (changed) {
     lcd.clear();
     draw_position();
+    draw_terrain();
     draw_player();
   }
 
