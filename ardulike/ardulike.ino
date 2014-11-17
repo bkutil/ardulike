@@ -29,6 +29,25 @@ void draw_terrain() {
   }
 };
 
+void draw_stairs() {
+  randomSeed(level);
+
+  uint8_t up   = random(256);
+  uint8_t down = up;
+
+  while (up == down) { down = random(256); }
+
+  if (level > 0 && up >= (position / 16) * 16 && up < ((position / 16) + 1) * 16) {
+    lcd.setCursor(up % 16, 1);
+    lcd.print("<");
+  }
+
+  if (level < 255 && down >= (position / 16) * 16 && down < ((position / 16) + 1) * 16) {
+    lcd.setCursor(down % 16, 1);
+    lcd.print(">");
+  }
+}
+
 void draw() {
   if (init_draw) {
     lcd.begin(16, 2);
@@ -39,6 +58,7 @@ void draw() {
 
   draw_position();
   draw_terrain();
+  draw_stairs();
   draw_player();
 };
 
