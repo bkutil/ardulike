@@ -6,6 +6,8 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 uint8_t position        = 0;
 uint8_t level           = 0;
 
+bool init_draw          = true;
+
 void draw_player() {
   lcd.setCursor(position % 16, 1);
   lcd.print('@');
@@ -27,11 +29,21 @@ void draw_terrain() {
   }
 };
 
-void setup() {
-  lcd.begin(16, 2);
+void draw() {
+  if (init_draw) {
+    lcd.begin(16, 2);
+    init_draw = false;
+  } else {
+    lcd.clear();
+  }
+
   draw_position();
   draw_terrain();
   draw_player();
+};
+
+void setup() {
+  draw();
 }
 
 void loop() {
@@ -48,10 +60,7 @@ void loop() {
   }
 
   if (changed) {
-    lcd.clear();
-    draw_position();
-    draw_terrain();
-    draw_player();
+    draw();
   }
 
   delay(30);
