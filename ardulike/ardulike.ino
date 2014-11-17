@@ -29,13 +29,21 @@ void draw_terrain() {
   lcd_b_row[16] = '\0';
 };
 
+void stairs_for_level(uint8_t level, uint8_t * up, uint8_t * down)
+{
+  randomSeed(level + 1);
+
+  *up   = (uint8_t) random(256);
+  *down = (uint8_t) random(256);
+
+  while (*up == *down) { *down = (uint8_t) random(256); }
+}
+
 void draw_stairs() {
-  randomSeed(level);
+  uint8_t up   = 0;
+  uint8_t down = 0;
 
-  uint8_t up   = random(256);
-  uint8_t down = up;
-
-  while (up == down) { down = random(256); }
+  stairs_for_level(level, &up, &down);
 
   if (level > 0 && up >= (position / 16) * 16 && up < ((position / 16) + 1) * 16) {
     lcd_b_row[up % 16] = '<';
@@ -70,8 +78,13 @@ void setup() {
 }
 
 void loop() {
+  uint8_t  up  = 0;
+  uint8_t down = 0;
+
   bool changed = false;
   Button input = Input::get();
+
+  stairs_for_level(level, &up, &down);
 
   if (input == ButtonLeft) {
     position -= 1;
@@ -80,6 +93,18 @@ void loop() {
   if (input == ButtonRight) {
     position += 1;
     changed   = true;
+  } else
+  if (input == ButtonDown && position == down && level < 255) {
+    level   += 1;
+    stairs_for_level(level, &up, &down);
+    position = up;
+    changed  = true;
+  } else
+  if (input == ButtonUp && position == up && level > 0) {
+    level   -= 1;
+    stairs_for_level(level, &up, &down);
+    position = down;
+    changed  = true;
   }
 
   if (changed) {
