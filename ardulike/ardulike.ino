@@ -20,7 +20,7 @@ void draw_position() {
 }
 
 void draw_terrain() {
-  randomSeed((position / 16 + 1) << 8 + level);
+  randomSeed(((position / 16 + 1) << 8) + level);
 
   for (uint8_t i = 0; i < 16; i++) {
     if ((random() % 4) == 0) { lcd.setCursor(i, 1); lcd.print("T"); }
