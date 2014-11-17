@@ -17,6 +17,9 @@ Button Input::read(void)
   if (abs(reading - ButtonLeft) < ButtonTreshold) {
     return ButtonLeft;
   } else
+  if (abs(reading - ButtonDown) < ButtonTreshold) {
+    return ButtonDown;
+  } else
   if (abs(reading - ButtonUp) < ButtonTreshold) {
     return ButtonUp;
   } else
